@@ -8,6 +8,16 @@ import { Server } from "socket.io";
 dotenv.config();
 const app = express();
 
+app.use((req, res, next) => {
+
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  
+  next();
+  
+  });
+  
 app.use(cors());
 app.use(express.json());
 
@@ -23,7 +33,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = new Server(server, {
   cors: {
-    origin: process.env.HOST,
+    origin: '*',
     credentials: true,
   },
 });
